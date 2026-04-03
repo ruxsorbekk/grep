@@ -1,7 +1,4 @@
 use clap::Parser;
-use std::io::prelude::*;
-use std::io::BufReader;
-use std::fs::File;
 
 #[derive(Parser)]
 struct Cli {
@@ -9,19 +6,12 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
-fn main() -> std::io::Result<()> {
+fn main() {
     let args = Cli::parse();
-    let f = File::open(&args.path)?;
-    let reader = BufReader::new(f);
-    
-    let mut result: Vec<String> = Vec::new();
-    // let result = reader.lines().into_iter().filter(|x| x.as_ref().unwrap().contains(&args.pattern));
-    // println!("{:?}", result);
-    for line in reader.lines().into_iter() {
-        if line.as_ref().unwrap().contains(&args.pattern) {
-            result.push(line.unwrap());
+    let content = std::fs::read_to_string(&args.path).expect("couldn't read the file");
+    for line in content.lines() {
+        if line.contains(&args.pattern) {
+            println!("{}", line);
         }
     }
-    println!("{:?}", result);
-    Ok(())
 }
