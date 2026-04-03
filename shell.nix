@@ -16,7 +16,6 @@ in
 
       rustfmt
       clippy
-      rust-analyzer
       cargo-watch
 
       # Other packages here
