@@ -28,13 +28,8 @@ fn main() -> Result<()>{
         pb.set_message("In progress...");
         let args = Cli::parse();
         let path = args.path;
-        let content = 
-            std::fs::read_to_string(&path).with_context(|| format!("could not read file `{:?}`", path))?;
-        for line in content.lines() {
-            if line.contains(&args.pattern) {
-                println!("{}", line);
-            }
-        }
+        let content = std::fs::read_to_string(&path).with_context(|| format!("could not read file `{:?}`", path))?;
+        gureppu::find_matches(&content, &args.pattern, &mut std::io::stdout());
         pb.finish_with_message("Done");
     
     Ok(())

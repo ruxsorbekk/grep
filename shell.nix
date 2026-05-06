@@ -13,7 +13,7 @@ in
       statix
       deadnix
       alejandra
-
+      rust-analyzer
       rustfmt
       clippy
       cargo-watch
